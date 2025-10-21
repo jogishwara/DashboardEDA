@@ -208,7 +208,7 @@ if df is not None:
                 st.warning(f"Kolom '{NAMA_KOLOM_FAKULTAS}' tidak ditemukan.")
 
         with col2_tab2:
-            NAMA_KOLOM_ANGKATAN = 'Angkatan' # PERBAIKAN: Spasi dihapus
+            NAMA_KOLOM_ANGKATAN = 'Angkatan ' # PERBAIKAN: Spasi dihapus
             if NAMA_KOLOM_ANGKATAN in df.columns:
                 bar_data = df[NAMA_KOLOM_ANGKATAN].value_counts().reset_index()
                 bar_data.columns = [NAMA_KOLOM_ANGKATAN, 'Jumlah Mahasiswa']
@@ -318,5 +318,6 @@ else:
     # Pesan ini hanya akan muncul jika path lokal salah dan tidak ada file yang diunggah.
 
     st.warning("Data tidak dapat dimuat. Periksa path file lokal Anda atau unggah file baru.")
+
 
 
