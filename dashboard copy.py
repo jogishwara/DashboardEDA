@@ -60,7 +60,7 @@ if df is not None:
         jumlah_responden = df.shape[0]
         jumlah_variabel = df.shape[1]
         jumlah_fakultas = df['Fakultas'].nunique() if 'Fakultas' in df.columns else "N/A"
-        jumlah_angkatan = df['Angkatan'].nunique() if 'Angkatan' in df.columns else "N/A"
+        jumlah_angkatan = df['Angkatan'].nunique() if 'Angkatan' in df.columns else "2022 - 2025"
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -316,4 +316,5 @@ if df is not None:
 
 else:
     # Pesan ini hanya akan muncul jika path lokal salah dan tidak ada file yang diunggah.
+
     st.warning("Data tidak dapat dimuat. Periksa path file lokal Anda atau unggah file baru.")
