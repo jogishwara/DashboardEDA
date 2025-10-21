@@ -4,7 +4,7 @@ import plotly.express as px
 
 # --- PERUBAHAN 1: DEFINISIKAN PATH LOKAL ANDA DI SINI ---
 # Ganti dengan path logo dan dataset yang benar di komputer Anda
-LOGO_PATH = r"C:\Users\Gusti Jogish\Documents\EDA Smt 3\image\logo-1.png"
+LOGO_PATH = r"image/logo-1.png"
 DATASET_PATH = r"C:\Users\Gusti Jogish\Documents\EDA Smt 3\cleaned_dataset.csv"
 
 # 1. Mengatur Konfigurasi Halaman
@@ -318,3 +318,4 @@ else:
     # Pesan ini hanya akan muncul jika path lokal salah dan tidak ada file yang diunggah.
 
     st.warning("Data tidak dapat dimuat. Periksa path file lokal Anda atau unggah file baru.")
+
