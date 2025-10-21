@@ -2,19 +2,15 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
-# --- PERUBAHAN 1: DEFINISIKAN PATH LOKAL ANDA DI SINI ---
-# Ganti dengan path logo dan dataset yang benar di komputer Anda
 LOGO_PATH = r"image/logo-1.png"
 DATASET_PATH = r"cleaned_dataset.csv"
 
-# 1. Mengatur Konfigurasi Halaman
 st.set_page_config(
     page_title="Dashboard EDA",
     page_icon=LOGO_PATH,
     layout="wide"
 )
 
-# Menampilkan logo di samping judul utama menggunakan kolom
 col_img, col_title = st.columns([0.1, 0.9])
 with col_img:
     st.image(LOGO_PATH, width=80)
@@ -23,7 +19,6 @@ with col_title:
 
 st.markdown("Gusti Jogishwara Adji (24083010107), Fabio Arraya P (2408301064), Febriani Yolanda T (24083010107) - Explanatory Data Analysis (EDA)")
 
-# 2. Fungsi untuk memuat data (sekarang bisa menerima path atau file yang diunggah)
 @st.cache_data
 def load_data(data_source):
     """Memuat data dari file CSV, baik dari path lokal maupun file yang diunggah."""
@@ -37,26 +32,19 @@ def load_data(data_source):
         st.error(f"Error: Gagal memuat data. Detail: {e}")
         return None
 
-# 3. Sidebar (TETAP ADA UNTUK MULTIPAGE)
 with st.sidebar:
     st.header("Upload Data Anda")
     st.write("Jika ingin menganalisis data lain, silakan unggah di sini:")
     uploaded_file = st.file_uploader("Pilih file CSV baru", type=["csv"])
 
-# --- PERUBAHAN 2: MODIFIKASI LOGIKA UTAMA ---
-# Tentukan sumber data: gunakan file yang diunggah jika ada, jika tidak, gunakan path lokal.
 data_source = uploaded_file if uploaded_file is not None else DATASET_PATH
 
-# Muat data dari sumber yang telah ditentukan
 df = load_data(data_source)
 
-# Lanjutkan sisa aplikasi seperti biasa
 if df is not None:
     tab1, tab2 = st.tabs(["📄 Data Overview", "📈 Visualisasi Distribusi"])
 
-    # --- INI ADALAH TAB 1 (LAYOUT MOCKUP BARU) ---
     with tab1:
-        # --- 1. LAYOUT KOTAK-KOTAK METRIK (TETAP) ---
         jumlah_responden = df.shape[0]
         jumlah_variabel = df.shape[1]
         jumlah_fakultas = df['Fakultas'].nunique() if 'Fakultas' in df.columns else "N/A"
@@ -78,10 +66,8 @@ if df is not None:
         
         st.divider()
 
-        # --- 2. LAYOUT VISUALISASI SESUAI MOCKUP ---
         col_left, col_right = st.columns(2)
 
-        # --- KOLOM KIRI (PIE CHART TINGGI) ---
         with col_left:
             st.markdown("##### Distribusi Fakultas Responden")
             NAMA_KOLOM_FAKULTAS = 'Fakultas' 
@@ -98,7 +84,6 @@ if df is not None:
             else:
                 st.warning(f"Kolom '{NAMA_KOLOM_FAKULTAS}' tidak ditemukan.")
 
-        # --- KOLOM KANAN (2 BARCHART + 1 LINECHART) ---
         with col_right:
             col_bar1, col_bar2 = st.columns(2)
             
@@ -147,7 +132,6 @@ if df is not None:
         
         st.divider()
 
-       # --- BAGIAN BARU: PENJELASAN VISUALISASI (DUA KOLOM) ---
         st.subheader("Penjelasan Visualisasi")
         col_desc_left, col_desc_right = st.columns(2)
 
@@ -163,7 +147,7 @@ if df is not None:
             else:
                 st.info("Data pie chart tidak tersedia.")
             
-            st.markdown("##### 3. Alasan Bermain") # Penjelasan 3 dipindah ke sini
+            st.markdown("##### 3. Alasan Bermain") 
             st.markdown("Grafik menunjukkan bahwa alasan utama responden bermain Roblox adalah untuk **'Sebagai Hiburan'** dan **'Mengisi waktu luang'**.")
 
         with col_desc_right:
@@ -177,14 +161,12 @@ if df is not None:
             else:
                 st.info("Data sentimen tidak tersedia.")
 
-            st.markdown("##### 4. Pertumbuhan Pemain") # Penjelasan 4 dipindah ke sini
+            st.markdown("##### 4. Pertumbuhan Pemain") 
             st.markdown("Terlihat adanya **lonjakan signifikan** jumlah pemain baru di kalangan responden, terutama dalam beberapa tahun terakhir (sekitar 2024-2025).")
-            
-    # --- INI ADALAH TAB 2 (TIDAK DIUBAH, TETAP UTUH SEPERTI ASLINYA) ---
+
     with tab2:
         st.header("Visualisasi Data Responden")
         
-        # --- BARIS PERTAMA VISUALISASI ---
         col1_tab2, col2_tab2 = st.columns(2)
 
         with col1_tab2:
@@ -208,7 +190,7 @@ if df is not None:
                 st.warning(f"Kolom '{NAMA_KOLOM_FAKULTAS}' tidak ditemukan.")
 
         with col2_tab2:
-            NAMA_KOLOM_ANGKATAN = 'Angkatan ' # PERBAIKAN: Spasi dihapus
+            NAMA_KOLOM_ANGKATAN = 'Angkatan '
             if NAMA_KOLOM_ANGKATAN in df.columns:
                 bar_data = df[NAMA_KOLOM_ANGKATAN].value_counts().reset_index()
                 bar_data.columns = [NAMA_KOLOM_ANGKATAN, 'Jumlah Mahasiswa']
@@ -226,7 +208,6 @@ if df is not None:
 
         st.divider()
 
-        # --- BARIS KEDUA VISUALISASI ---
         col3_tab2, col4_tab2 = st.columns(2)
 
         with col3_tab2:
@@ -267,7 +248,6 @@ if df is not None:
         
         st.divider()
 
-        # --- BARIS KETIGA VISUALISASI ---
         col5_tab2, col6_tab2 = st.columns(2)
 
         with col5_tab2:
@@ -315,9 +295,8 @@ if df is not None:
                 st.warning(f"Kolom '{NAMA_KOLOM_SKALA}' tidak ditemukan.")
 
 else:
-    # Pesan ini hanya akan muncul jika path lokal salah dan tidak ada file yang diunggah.
-
     st.warning("Data tidak dapat dimuat. Periksa path file lokal Anda atau unggah file baru.")
+
 
 
 
